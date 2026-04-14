@@ -14,15 +14,15 @@ fn filter_args(source: &str) -> Option<(&str, Vec<&str>, u32, u32)> {
     RegexBuilder::new(r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\), *(\d+), *(.*)\)\)")
       .dot_matches_new_line(true)
       .build()
-      .unwrap(),
+      .ok()?,
     RegexBuilder::new(r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\)")
       .dot_matches_new_line(true)
       .build()
-      .unwrap(),
+      .ok()?,
   ];
 
   if let Some(regex) = regexes.first() {
-    let args = regex.captures(source).unwrap();
+    let args = regex.captures(source)?;
 
     let arg1 = args.get(1)?.as_str();
     let arg2: Vec<&str> = args.get(4)?.as_str().split('|').collect();
@@ -48,7 +48,7 @@ pub fn unpack(source: &str) -> Option<String> {
   if count != symtab.len() as u32 {
     return None;
   }
-  let char_regex = Regex::new(r"\b\w+\b").unwrap();
+  let char_regex = Regex::new(r"\b\w+\b").ok()?;
   let source = char_regex.replace_all(payload, |x: &Captures| {
     let cap = if let Some(x) = x.get(0) {
       x.as_str()
