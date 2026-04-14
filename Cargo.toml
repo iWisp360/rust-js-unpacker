@@ -1,7 +1,7 @@
 [package]
 authors = ["Noskcaj <kcajdev@gmail.com>"]
-name = "js_unpacker"
-version = "0.1.0"
+name = "js-unpacker"
+version = "0.2.0"
 edition = "2024"
 
 [dependencies]
